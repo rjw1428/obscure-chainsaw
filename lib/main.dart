@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
+import 'settings_service.dart';
 import 'theme.dart';
 
-void main() => runApp(const LauncherApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SettingsService.instance.load();
+  runApp(const LauncherApp());
+}
 
 class LauncherApp extends StatelessWidget {
   const LauncherApp({super.key});
@@ -10,7 +15,7 @@ class LauncherApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'LetterBoxd',
+      title: 'Letterboxd',
       debugShowCheckedModeBanner: false,
       theme: buildAppTheme(),
       home: const LoginScreen(),

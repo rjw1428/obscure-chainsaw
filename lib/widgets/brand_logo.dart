@@ -24,7 +24,7 @@ class BrandLogo extends StatelessWidget {
         if (showWordmark) ...[
           const SizedBox(height: 16),
           Text(
-            'LetterBoxd',
+            'Letterboxd',
             style: GoogleFonts.archivo(
               color: AppColors.textPrimary,
               fontSize: size * 0.42,

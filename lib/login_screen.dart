@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'auth_service.dart';
+import 'settings_screen.dart';
+import 'settings_service.dart';
 import 'theme.dart';
 import 'widgets/brand_logo.dart';
 
@@ -11,7 +13,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _auth = AuthService();
   final _username = TextEditingController();
   final _password = TextEditingController();
   bool _obscure = true;
@@ -31,7 +32,9 @@ class _LoginScreenState extends State<LoginScreen> {
       _busy = true;
       _status = null;
     });
-    final result = await _auth.signIn(
+    // Read the endpoint fresh each time so settings changes apply immediately.
+    final auth = AuthService(endpoint: SettingsService.instance.endpoint);
+    final result = await auth.signIn(
       username: _username.text.trim(),
       password: _password.text,
     );
@@ -53,7 +56,9 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
+      body: Stack(
+        children: [
+          Center(
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
           child: ConstrainedBox(
@@ -122,6 +127,24 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
+          SafeArea(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                tooltip: 'Settings',
+                icon: const Icon(Icons.settings, color: AppColors.textMuted),
+                onPressed: _openSettings,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _openSettings() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute<void>(builder: (_) => const SettingsScreen()),
     );
   }
 
