@@ -1,0 +1,24 @@
+{
+  "name": "letterboxd-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "POC backend: reads Letterboxd ratings/reviews and automates login + review submission.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "puppeteer": "^23.6.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
